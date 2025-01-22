@@ -1,0 +1,56 @@
+package model.entities.Library;
+
+import model.entities.BookEntity;
+import model.entities.ClientEntity;
+import model.exception.BookAlreadyExistsException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public final class Books {
+    private final List<BookEntity> books = new ArrayList<>();
+
+    public BookEntity create(int id, String author, String title) throws BookAlreadyExistsException {
+        if (getBook(id) != null) {
+            throw new BookAlreadyExistsException("Book already exists with ID: " + id);
+        }
+        BookEntity book = new BookEntity(id, author, title);
+        books.add(book);
+        return book;
+    }
+
+    public void remove(int id) {
+        BookEntity book = getBook(id);
+        if (book != null) {
+            books.remove(book);
+        }
+    }
+
+    public BookEntity getBook(int id) {
+        for (BookEntity book : books) {
+            if (book.getId() == id) {
+                return book;
+            }
+        }
+        return null;
+    }
+
+    public List<BookEntity> getAll() {
+        return new ArrayList<>(books);
+    }
+
+    public void returnBook(BookEntity book, ClientEntity client) throws BookAlreadyExistsException {
+        if (book == null || client == null) {
+            throw new BookAlreadyExistsException("Book or ClientEntity cannot be null");
+        }
+        if (!client.getRentedBooks().contains(book)) {
+            throw new BookAlreadyExistsException("This client did not rent this book");
+        }
+        client.removeBook(book);
+        book.setRented(false);
+    }
+
+
+
+
+}
