@@ -12,15 +12,14 @@ public final class Clients {
     private final List<ClientEntity> clients = new ArrayList<>();
 
     public ClientEntity create(int id, @NotNull String name,@NotNull String email) {
-        if(id <= 0){
-            throw new IllegalArgumentException("id invalid");
-        }
+        if(id <= 0){throw new IllegalArgumentException("id invalid");}
         ClientEntity client = new ClientEntity(id, name, email);
         clients.add(client);
         return client;
     }
 
     public void remove(int id) {
+        if(id <= 0){throw new IllegalArgumentException("id invalid");}
         ClientEntity client = getClient(id);
         if (client != null) {
             clients.remove(client);
@@ -28,6 +27,7 @@ public final class Clients {
     }
 
     public ClientEntity getClient(int id) {
+        if(id <= 0){throw new IllegalArgumentException("id invalid");}
         for (ClientEntity client : clients) {
             if (client.getId() == id) {
                 return client;

@@ -43,4 +43,10 @@ public class BookEntity implements Book {
     public void setRented(boolean rented) {
         this.isRented = rented;
     }
+
+
+
+    public String toString() {
+        return author + " - " + title;
+    }
 }
